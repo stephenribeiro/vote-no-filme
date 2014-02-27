@@ -3,9 +3,9 @@ package br.com.bluesoft.modelo;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -77,21 +77,7 @@ public class ComputadorDeVotosTest {
 
     @Test
     public void entendeTodosFilmesComZeroVotosOrdenandoAlfabeticamente() {
-        Filme harry = new Filme("Harry Potter");
-        Filme senhor = new Filme("Senhor dos Anéis");
-        VotoDAO votoDAO = mock(VotoDAO.class);
-
-        Map<Filme, Integer> votos = new HashMap<Filme, Integer>();
-        votos.put(harry, 0);
-        votos.put(senhor, 0);
-
-        when(votoDAO.agregarVotos()).thenReturn(votos);
-
-        ComputadorDeVotos computadorDeVotos = new ComputadorDeVotos(votoDAO);
-
-        Filme maisVotado = computadorDeVotos.getMaisVotado();
-
-        assertThat(maisVotado, is(nullValue()));
+        fail();
     }
 
     @Test
