@@ -3,21 +3,40 @@ package br.com.bluesoft.modelo;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Representa uma combinação de dois filmes a e b
+ * 
+ * @author stephen.ribeiro
+ */
 public class CombinacaoFilme {
 
     private Filme a;
 
     private Filme b;
 
+    /**
+     * Construtor
+     * 
+     * @param a filme a
+     * @param b filme b
+     */
     public CombinacaoFilme(Filme a, Filme b) {
         this.a = a;
         this.b = b;
     }
 
+    /**
+     * Devolve os filmes numa lista
+     * 
+     * @return
+     */
     public List<Filme> getAsList() {
         return Arrays.asList(this.a, this.b);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -27,6 +46,9 @@ public class CombinacaoFilme {
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

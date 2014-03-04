@@ -21,6 +21,11 @@ import br.com.bluesoft.modelo.Filme;
 import br.com.bluesoft.modelo.Usuario;
 import br.com.bluesoft.modelo.Voto;
 
+/**
+ * Controller de votos
+ * 
+ * @author stephen.ribeiro
+ */
 @Transactional
 @Controller
 public class VotosController {
@@ -35,6 +40,14 @@ public class VotosController {
 
     private List<CombinacaoFilme> combinacoes;
 
+    /**
+     * Controller
+     * 
+     * @param filmeDAO dao de filme
+     * @param votoDAO dao de voto
+     * @param combinadorDeFilmes
+     * @param computadorDeVotos
+     */
     @Autowired
     public VotosController(FilmeDAO filmeDAO, VotoDAO votoDAO, CombinadorDeFilmes combinadorDeFilmes, ComputadorDeVotos computadorDeVotos) {
         this.filmeDAO = filmeDAO;
@@ -44,7 +57,7 @@ public class VotosController {
         this.combinacoes = this.obtemCombinacoesPossiveis();
     }
 
-    @RequestMapping("/votar")
+    @RequestMapping({ "/votar", "/" })
     public String votar(Model model, HttpSession session) {
         List<Filme> filmesSelecionados = this.obtemOuCriaFilmesSelecionados(session);
         filmesSelecionados.clear();
@@ -95,10 +108,13 @@ public class VotosController {
                 this.computadorDeVotos.getRankMaisVotados(this.votoDAO.listaTodos(), this.filmeDAO.listaTodos());
         model.addAttribute("rankGeral", rankGeral.keySet());
 
+        model.addAttribute("usuario", usuario);
+
         session.invalidate();
         return "voto/rank";
     }
 
+    @SuppressWarnings("unchecked")
     private List<Filme> obtemOuCriaFilmesSelecionados(HttpSession session) {
         List<Filme> filmesSelecionados = null;
         if (session.getAttribute("filmesSelecionados") != null) {

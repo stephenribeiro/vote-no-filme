@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -19,11 +18,6 @@ import org.junit.Test;
 import br.com.bluesoft.dao.VotoDAO;
 
 public class ComputadorDeVotosTest {
-
-    @Test
-    public void entendeTodosFilmesOrdenandoAlfabeticamente() {
-        fail();
-    }
 
     @Test
     public void devolveRankCorretamente() {

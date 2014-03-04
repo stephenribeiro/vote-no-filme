@@ -6,6 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * Representa o usuário
+ * 
+ * @author stephen.ribeiro
+ */
 @Entity
 public class Usuario implements Serializable {
 
@@ -17,9 +22,18 @@ public class Usuario implements Serializable {
 
     private String email;
 
+    /**
+     * Construtor
+     */
     public Usuario() {
     }
 
+    /**
+     * Construtor
+     * 
+     * @param nome do usuário
+     * @param email do usuário
+     */
     public Usuario(String nome, String email) {
         this.nome = nome;
         this.email = email;
@@ -77,6 +91,9 @@ public class Usuario implements Serializable {
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

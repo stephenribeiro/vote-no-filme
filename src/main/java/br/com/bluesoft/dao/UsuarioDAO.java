@@ -10,19 +10,38 @@ import org.springframework.stereotype.Repository;
 
 import br.com.bluesoft.modelo.Usuario;
 
+/**
+ * DAO para {@link Usuario}
+ * 
+ * @author stephen.ribeiro
+ */
 @Repository
 public class UsuarioDAO implements Serializable {
 
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     * Construtor
+     */
     public UsuarioDAO() {
     }
 
+    /**
+     * Construtor
+     * 
+     * @param em entity manager
+     */
     public UsuarioDAO(EntityManager em) {
         this.em = em;
     }
 
+    /**
+     * Verifica se o usuário existe
+     * 
+     * @param usuario a ser verificado
+     * @return true se o usuário existe
+     */
     public boolean existe(Usuario usuario) {
 
         Query query =
@@ -34,6 +53,11 @@ public class UsuarioDAO implements Serializable {
         return encontrado;
     }
 
+    /**
+     * Adiciona um usuário
+     * 
+     * @param usuario a ser adicionado
+     */
     public void adiciona(Usuario usuario) {
         em.persist(usuario);
     }

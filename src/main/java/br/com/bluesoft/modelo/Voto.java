@@ -8,6 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+/**
+ * Representa um voto
+ * 
+ * @author stephen.ribeiro
+ */
 @Entity
 public class Voto implements Serializable {
 
@@ -21,9 +26,18 @@ public class Voto implements Serializable {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Filme filme;
 
+    /**
+     * Construtor
+     */
     public Voto() {
     }
 
+    /**
+     * Construtor
+     * 
+     * @param usuario que fez o voto
+     * @param filme do voto
+     */
     public Voto(Usuario usuario, Filme filme) {
         this.usuario = usuario;
         this.filme = filme;
@@ -43,6 +57,9 @@ public class Voto implements Serializable {
         return filme;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -53,6 +70,9 @@ public class Voto implements Serializable {
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

@@ -14,7 +14,7 @@
 
 	<table id="tabelaEsquerda">
 		<tr>
-			<th>Rank Filmes</th>
+			<th>Rank <c:out value="${usuario.nome}"/></th>
 		</tr>
 		<c:forEach items="${rankUsuario}" var="filme">
 			<tr>
@@ -37,6 +37,6 @@
 	</table>
 	
 	<a id="rodape" href="novoVoto">Votar Novamente</a>
-	
+
 </body>
 </html>

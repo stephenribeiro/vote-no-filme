@@ -8,9 +8,21 @@ import java.util.TreeMap;
 
 import org.springframework.stereotype.Repository;
 
+/**
+ * Responsável por computar os votos
+ * 
+ * @author stephen.ribeiro
+ */
 @Repository
 public class ComputadorDeVotos {
 
+    /**
+     * Devolve os filmes mais votados em ordem decrescente de acordo com uma lista de votos
+     * 
+     * @param votos dos filmes
+     * @param opcoes possíveis
+     * @return os filmes ordenados
+     */
     public TreeMap<Filme, Integer> getRankMaisVotados(List<Voto> votos, List<Filme> opcoes) {
         Map<Filme, Integer> votosAgregados = this.agregarVotos(votos);
         this.preencheNaoVotados(votosAgregados, opcoes);
@@ -20,6 +32,12 @@ public class ComputadorDeVotos {
         return sorted_map;
     }
 
+    /**
+     * Agrega os votos por filme
+     * 
+     * @param votos a serem agregados
+     * @return os votos agregados por filme
+     */
     private Map<Filme, Integer> agregarVotos(List<Voto> votos) {
         Map<Filme, Integer> votosAgregados = new HashMap<Filme, Integer>();
         for (Voto voto : votos) {
@@ -29,6 +47,12 @@ public class ComputadorDeVotos {
         return votosAgregados;
     }
 
+    /**
+     * Preenche os filmes que não foram votados com zero votos
+     * 
+     * @param votos lista de votos
+     * @param opcoes de filmes para votação
+     */
     private void preencheNaoVotados(Map<Filme, Integer> votos, List<Filme> opcoes) {
         for (Filme opcao : opcoes) {
             if (votos.get(opcao) == null) {
@@ -37,6 +61,11 @@ public class ComputadorDeVotos {
         }
     }
 
+    /**
+     * Responsável pela ordenação dos filmes de acordo com a quantidade de votos
+     * 
+     * @author stephen.ribeiro
+     */
     class ValueComparator implements Comparator<Filme> {
 
         Map<Filme, Integer> base;

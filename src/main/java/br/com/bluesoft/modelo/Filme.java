@@ -6,6 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * Representa um filme
+ * 
+ * @author stephen.ribeiro
+ */
 @Entity
 public class Filme implements Serializable {
 
@@ -15,9 +20,17 @@ public class Filme implements Serializable {
 
     private String nome;
 
+    /**
+     * Construtor
+     */
     public Filme() {
     }
 
+    /**
+     * Construtor
+     * 
+     * @param nome
+     */
     public Filme(String nome) {
         this.nome = nome;
     }
@@ -55,6 +68,9 @@ public class Filme implements Serializable {
         return this.nome;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -63,6 +79,9 @@ public class Filme implements Serializable {
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
