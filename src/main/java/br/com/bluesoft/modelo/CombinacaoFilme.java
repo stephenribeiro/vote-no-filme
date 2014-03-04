@@ -1,5 +1,8 @@
 package br.com.bluesoft.modelo;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CombinacaoFilme {
 
     private Filme a;
@@ -9,6 +12,10 @@ public class CombinacaoFilme {
     public CombinacaoFilme(Filme a, Filme b) {
         this.a = a;
         this.b = b;
+    }
+
+    public List<Filme> getAsList() {
+        return Arrays.asList(this.a, this.b);
     }
 
     @Override

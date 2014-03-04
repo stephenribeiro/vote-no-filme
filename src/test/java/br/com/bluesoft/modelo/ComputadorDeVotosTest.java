@@ -10,7 +10,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -22,61 +21,7 @@ import br.com.bluesoft.dao.VotoDAO;
 public class ComputadorDeVotosTest {
 
     @Test
-    public void devolveFilmeMaisVotadoParaTresVotos() {
-        Filme harry = new Filme("Harry Potter");
-        Filme senhor = new Filme("Senhor dos Anéis");
-        VotoDAO votoDAO = mock(VotoDAO.class);
-
-        Map<Filme, Integer> votos = new HashMap<Filme, Integer>();
-        votos.put(harry, 1);
-        votos.put(senhor, 2);
-
-        when(votoDAO.agregarVotos()).thenReturn(votos);
-
-        ComputadorDeVotos computadorDeVotos = new ComputadorDeVotos(votoDAO);
-
-        Filme maisVotado = computadorDeVotos.getMaisVotado();
-
-        assertThat(maisVotado, is(equalTo(senhor)));
-    }
-
-    @Test
-    public void devolveFilmeMaisVotadoParaUmVoto() {
-        Filme harry = new Filme("Harry Potter");
-        VotoDAO votoDAO = mock(VotoDAO.class);
-
-        Map<Filme, Integer> votos = new HashMap<Filme, Integer>();
-        votos.put(harry, 1);
-
-        when(votoDAO.agregarVotos()).thenReturn(votos);
-
-        ComputadorDeVotos computadorDeVotos = new ComputadorDeVotos(votoDAO);
-        Filme maisVotado = computadorDeVotos.getMaisVotado();
-
-        assertThat(maisVotado, is(equalTo(harry)));
-    }
-
-    @Test
-    public void entendeTodosFilmesComMesmaQuantidadeDeVotos() {
-        Filme harry = new Filme("Harry Potter");
-        Filme senhor = new Filme("Senhor dos Anéis");
-        VotoDAO votoDAO = mock(VotoDAO.class);
-
-        Map<Filme, Integer> votos = new HashMap<Filme, Integer>();
-        votos.put(harry, 2);
-        votos.put(senhor, 2);
-
-        when(votoDAO.agregarVotos()).thenReturn(votos);
-
-        ComputadorDeVotos computadorDeVotos = new ComputadorDeVotos(votoDAO);
-
-        Filme maisVotado = computadorDeVotos.getMaisVotado();
-
-        assertThat(maisVotado, is(equalTo(harry)));
-    }
-
-    @Test
-    public void entendeTodosFilmesComZeroVotosOrdenandoAlfabeticamente() {
+    public void entendeTodosFilmesOrdenandoAlfabeticamente() {
         fail();
     }
 
@@ -97,9 +42,9 @@ public class ComputadorDeVotosTest {
 
         when(votoDAO.listaTodos()).thenReturn(votos);
 
-        ComputadorDeVotos computadorDeVotos = new ComputadorDeVotos(votoDAO);
+        ComputadorDeVotos computadorDeVotos = new ComputadorDeVotos();
 
-        TreeMap<Filme, Integer> rankMaisVotados = computadorDeVotos.getRankMaisVotados();
+        TreeMap<Filme, Integer> rankMaisVotados = computadorDeVotos.getRankMaisVotados(votoDAO.listaTodos(), Arrays.asList(harry, senhor));
 
         assertThat(rankMaisVotados.size(), is(equalTo(2)));
 

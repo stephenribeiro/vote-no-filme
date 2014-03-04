@@ -1,5 +1,7 @@
 package br.com.bluesoft.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Voto {
+public class Voto implements Serializable {
 
     @Id
     @GeneratedValue

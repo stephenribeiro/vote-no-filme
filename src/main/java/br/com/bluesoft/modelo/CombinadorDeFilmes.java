@@ -3,6 +3,9 @@ package br.com.bluesoft.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class CombinadorDeFilmes {
 
     public List<CombinacaoFilme> combinar(List<Filme> filmes, int escolhas) {

@@ -10,7 +10,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.bluesoft.dao.UsuarioDAO;
 import br.com.bluesoft.modelo.Usuario;
 
 public class UsuarioDAOTest {
@@ -19,7 +18,7 @@ public class UsuarioDAOTest {
 
     @Before
     public void init() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("vote-no-filme");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("vote-no-filme-teste");
         this.entityManager = factory.createEntityManager();
     }
 

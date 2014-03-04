@@ -6,35 +6,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import br.com.bluesoft.dao.VotoDAO;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ComputadorDeVotos {
 
-    private VotoDAO votoDAO;
-
-    public ComputadorDeVotos(VotoDAO votoDAO) {
-        this.votoDAO = votoDAO;
-    }
-
-    public Filme getMaisVotado() {
-        Map<Filme, Integer> votos = this.votoDAO.agregarVotos();
-
-        Filme filmeComMaisVotos = null;
-        for (Filme filme : votos.keySet()) {
-            Integer numeroDeVotosMaisVotado = votos.get(filmeComMaisVotos) == null ? 0 : votos.get(filmeComMaisVotos);
-            if (votos.get(filme) > numeroDeVotosMaisVotado) {
-                filmeComMaisVotos = filme;
-            }
-        }
-
-        return filmeComMaisVotos;
-    }
-
-    public TreeMap<Filme, Integer> getRankMaisVotados() {
-        Map<Filme, Integer> map = this.agregarVotos(this.votoDAO.listaTodos());
-        ValueComparator bvc = new ValueComparator(map);
+    public TreeMap<Filme, Integer> getRankMaisVotados(List<Voto> votos, List<Filme> opcoes) {
+        Map<Filme, Integer> votosAgregados = this.agregarVotos(votos);
+        this.preencheNaoVotados(votosAgregados, opcoes);
+        ValueComparator bvc = new ValueComparator(votosAgregados);
         TreeMap<Filme, Integer> sorted_map = new TreeMap<Filme, Integer>(bvc);
-        sorted_map.putAll(map);
+        sorted_map.putAll(votosAgregados);
         return sorted_map;
     }
 
@@ -47,6 +29,14 @@ public class ComputadorDeVotos {
         return votosAgregados;
     }
 
+    private void preencheNaoVotados(Map<Filme, Integer> votos, List<Filme> opcoes) {
+        for (Filme opcao : opcoes) {
+            if (votos.get(opcao) == null) {
+                votos.put(opcao, 0);
+            }
+        }
+    }
+
     class ValueComparator implements Comparator<Filme> {
 
         Map<Filme, Integer> base;
@@ -55,13 +45,12 @@ public class ComputadorDeVotos {
             this.base = base;
         }
 
-        // Note: this comparator imposes orderings that are inconsistent with equals.
         public int compare(Filme a, Filme b) {
             if (base.get(a) >= base.get(b)) {
                 return -1;
             } else {
                 return 1;
-            } // returning 0 would merge keys
+            }
         }
     }
 

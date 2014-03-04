@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -23,12 +22,15 @@ import br.com.bluesoft.modelo.Voto;
 
 public class VotoDAOTest {
 
-    EntityManager entityManager;
+    private EntityManager entityManager;
+
+    private VotoDAO votoDAO;
 
     @Before
     public void init() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("vote-no-filme");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("vote-no-filme-teste");
         this.entityManager = factory.createEntityManager();
+        this.votoDAO = new VotoDAO(this.entityManager);
     }
 
     @After
@@ -38,17 +40,15 @@ public class VotoDAOTest {
 
     @Test
     public void deveInserirCorretamente() {
-        VotoDAO votoDAO = new VotoDAO(this.entityManager);
         Usuario usuario = new Usuario("Stephen", "a@a.com");
         Filme filme = new Filme("Harry Potter");
         Voto voto = new Voto(usuario, filme);
-        votoDAO.adiciona(voto);
-        assertTrue(votoDAO.existe(voto));
+        this.votoDAO.adiciona(voto);
+        assertTrue(this.votoDAO.existe(voto));
     }
 
     @Test
     public void deveListarCorretamente() {
-        VotoDAO votoDAO = new VotoDAO(this.entityManager);
         Usuario stephen = new Usuario("Stephen", "stephen@a.com");
         Usuario fulano = new Usuario("Fulano", "fulano@a.com");
         Filme harry = new Filme("Harry Potter");
@@ -56,18 +56,17 @@ public class VotoDAOTest {
         Voto voto1 = new Voto(stephen, harry);
         Voto voto2 = new Voto(stephen, senhor);
         Voto voto3 = new Voto(fulano, senhor);
-        votoDAO.adiciona(voto1);
-        votoDAO.adiciona(voto2);
-        votoDAO.adiciona(voto3);
+        this.votoDAO.adiciona(voto1);
+        this.votoDAO.adiciona(voto2);
+        this.votoDAO.adiciona(voto3);
 
-        List<Voto> votos = votoDAO.listaTodos();
+        List<Voto> votos = this.votoDAO.listaTodos();
         assertThat(votos.size(), is(equalTo(3)));
         assertTrue(votos.containsAll(Arrays.asList(voto1, voto2, voto3)));
     }
 
     @Test
-    public void deveAgregarCorretamente() {
-        VotoDAO votoDAO = new VotoDAO(this.entityManager);
+    public void deveListarPorUsuario() {
         Usuario stephen = new Usuario("Stephen", "stephen@a.com");
         Usuario fulano = new Usuario("Fulano", "fulano@a.com");
         Filme harry = new Filme("Harry Potter");
@@ -75,13 +74,15 @@ public class VotoDAOTest {
         Voto voto1 = new Voto(stephen, harry);
         Voto voto2 = new Voto(stephen, senhor);
         Voto voto3 = new Voto(fulano, senhor);
-        votoDAO.adiciona(voto1);
-        votoDAO.adiciona(voto2);
-        votoDAO.adiciona(voto3);
+        this.votoDAO.adiciona(voto1);
+        this.votoDAO.adiciona(voto2);
+        this.votoDAO.adiciona(voto3);
 
-        Map<Filme, Integer> listaVotos = votoDAO.agregarVotos();
-        assertThat(listaVotos.get(harry), is(equalTo(1)));
-        assertThat(listaVotos.get(senhor), is(equalTo(2)));
+        List<Voto> listaPorUsuario = this.votoDAO.listaPorUsuario(stephen);
+
+        assertThat(listaPorUsuario.size(), is(equalTo(2)));
+        assertTrue(listaPorUsuario.contains(voto1));
+        assertTrue(listaPorUsuario.contains(voto2));
     }
 
 }
